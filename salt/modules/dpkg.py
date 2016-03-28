@@ -385,7 +385,7 @@ def info(*packages):
     # However, this file is operated by dselect which has to be installed.
     dselect_pkg_avail = _get_pkg_ds_avail()
 
-    ret = dict()
+    ret = list()
     for pkg in _get_pkg_info(*packages):
         # Merge extra information from the dselect, if available
         for pkg_ext_k, pkg_ext_v in dselect_pkg_avail.get(pkg['package'], {}).items():
@@ -401,6 +401,6 @@ def info(*packages):
         lic = _get_pkg_license(pkg['package'])
         if lic:
             pkg['license'] = lic
-        ret[pkg['package']] = pkg
+        ret.append((pkg['package'], pkg,))
 
     return ret

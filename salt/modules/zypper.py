@@ -181,8 +181,8 @@ def info_installed(*names, **kwargs):
         salt '*' pkg.info_installed <package1> <package2> <package3> ... attr=version,vendor
         salt '*' pkg.info_installed <package1> <package2> <package3> ... attr=version,vendor errors=true
     '''
-    ret = dict()
-    for pkg_name, pkg_nfo in __salt__['lowpkg.info'](*names, **kwargs).items():
+    ret = list()
+    for pkg_name, pkg_nfo in __salt__['lowpkg.info'](*names, **kwargs):
         t_nfo = dict()
         # Translate dpkg-specific keys to a common structure
         for key, value in pkg_nfo.items():
@@ -197,7 +197,7 @@ def info_installed(*names, **kwargs):
             else:
                 t_nfo[key] = value
 
-        ret[pkg_name] = t_nfo
+        ret.append((pkg_name, t_nfo,))
 
     return ret
 

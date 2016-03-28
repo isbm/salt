@@ -491,7 +491,7 @@ def info(*packages, **attr):
     else:
         out = call['stdout']
 
-    ret = dict()
+    ret = list()
     for pkg_info in re.split(r"----*", out):
         pkg_info = pkg_info.strip()
         if not pkg_info:
@@ -538,6 +538,6 @@ def info(*packages, **attr):
         if attr and 'description' in attr or not attr:
             pkg_data['description'] = os.linesep.join(descr)
         if pkg_name:
-            ret[pkg_name] = pkg_data
+            ret.append((pkg_name, pkg_data,))
 
     return ret
